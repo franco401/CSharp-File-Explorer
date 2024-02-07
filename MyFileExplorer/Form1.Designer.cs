@@ -56,12 +56,14 @@
             this.FilesTable.RowTemplate.Height = 29;
             this.FilesTable.Size = new System.Drawing.Size(797, 316);
             this.FilesTable.TabIndex = 2;
+            this.FilesTable.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.FilesTable_CellMouseDoubleClick);
             // 
             // DirName
             // 
             this.DirName.HeaderText = "Name";
             this.DirName.MinimumWidth = 300;
             this.DirName.Name = "DirName";
+            this.DirName.ReadOnly = true;
             this.DirName.Width = 300;
             // 
             // FileType
@@ -69,6 +71,7 @@
             this.FileType.HeaderText = "Type";
             this.FileType.MinimumWidth = 200;
             this.FileType.Name = "FileType";
+            this.FileType.ReadOnly = true;
             this.FileType.Width = 200;
             // 
             // DirSize
@@ -76,6 +79,7 @@
             this.DirSize.HeaderText = "Size";
             this.DirSize.MinimumWidth = 200;
             this.DirSize.Name = "DirSize";
+            this.DirSize.ReadOnly = true;
             this.DirSize.Width = 200;
             // 
             // label1
