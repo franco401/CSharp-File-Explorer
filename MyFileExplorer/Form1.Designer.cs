@@ -41,6 +41,7 @@
             this.newDirBox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.SelectedFile = new System.Windows.Forms.Label();
+            this.DeleteDirBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.FilesTable)).BeginInit();
             this.SuspendLayout();
             // 
@@ -139,7 +140,7 @@
             // 
             // CreateDirBtn
             // 
-            this.CreateDirBtn.Location = new System.Drawing.Point(327, 481);
+            this.CreateDirBtn.Location = new System.Drawing.Point(327, 525);
             this.CreateDirBtn.Name = "CreateDirBtn";
             this.CreateDirBtn.Size = new System.Drawing.Size(112, 29);
             this.CreateDirBtn.TabIndex = 9;
@@ -149,7 +150,7 @@
             // 
             // newDirBox
             // 
-            this.newDirBox.Location = new System.Drawing.Point(12, 483);
+            this.newDirBox.Location = new System.Drawing.Point(12, 527);
             this.newDirBox.Name = "newDirBox";
             this.newDirBox.Size = new System.Drawing.Size(309, 27);
             this.newDirBox.TabIndex = 11;
@@ -172,12 +173,23 @@
             this.SelectedFile.TabIndex = 14;
             this.SelectedFile.Text = "Selected File";
             // 
+            // DeleteDirBtn
+            // 
+            this.DeleteDirBtn.Location = new System.Drawing.Point(13, 491);
+            this.DeleteDirBtn.Name = "DeleteDirBtn";
+            this.DeleteDirBtn.Size = new System.Drawing.Size(130, 29);
+            this.DeleteDirBtn.TabIndex = 15;
+            this.DeleteDirBtn.Text = "Delete Folder";
+            this.DeleteDirBtn.UseVisualStyleBackColor = true;
+            this.DeleteDirBtn.Click += new System.EventHandler(this.DeleteDirBtn_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(1165, 600);
+            this.Controls.Add(this.DeleteDirBtn);
             this.Controls.Add(this.SelectedFile);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.newDirBox);
@@ -211,5 +223,6 @@
         private DataGridViewTextBoxColumn DateCreated;
         private Label label3;
         private Label SelectedFile;
+        private Button DeleteDirBtn;
     }
 }

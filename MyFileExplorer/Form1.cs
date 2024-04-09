@@ -256,7 +256,7 @@ namespace MyFileExplorer
                 process.Start();
 
                 //let user know the new directory was made
-                MessageBox.Show("Directory successfully made. Reopen this directory to see it.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Directory successfully made. Reopen this directory to see changes.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
@@ -293,6 +293,45 @@ namespace MyFileExplorer
                      */
                     SelectedFile.Text = row.Cells[0].Value.ToString();
                 }
+                
+                //if the currently selected row is not a folder, disable delete directory button
+                if (row.Cells[1].Value.ToString() == "File")
+                {
+                    DeleteDirBtn.Enabled = false;
+                } else
+                {
+                    DeleteDirBtn.Enabled = true;
+                }
+            }
+        }
+
+        private void DeleteDirBtn_Click(object sender, EventArgs e)
+        {
+            //read seleted directory
+            string selectedDirectory = SelectedFile.Text;
+
+            //escape backslash
+            string quote = "\"";
+
+            if (selectedDirectory != "C:\\" || directory != "C:\\Windows\\System32")
+            {
+                //create process object
+                Process process = new Process();
+
+
+                //use cmd to create a new directory without display it
+                process.StartInfo.FileName = "cmd.exe";
+                process.StartInfo.Arguments = "/K " + "rmdir " + quote + currentDir + "\\" + selectedDirectory + quote;
+                process.StartInfo.UseShellExecute = true;
+                process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                process.Start();
+                
+                //let user know the directory was deleted
+                MessageBox.Show("Successfully deleted directory. Reopen this directory to see changes", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show("This directory can't be deleted", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
