@@ -37,33 +37,36 @@
             this.FileSize = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DateCreated = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.NextDirBtn = new System.Windows.Forms.Button();
+            this.CreateDirBtn = new System.Windows.Forms.Button();
+            this.newDirBox = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.SelectedFile = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.FilesTable)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(10, 7);
+            this.label1.Location = new System.Drawing.Point(11, 35);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(101, 15);
+            this.label1.Size = new System.Drawing.Size(125, 20);
             this.label1.TabIndex = 3;
             this.label1.Text = "Current Directory:";
             // 
             // CurrentDir
             // 
             this.CurrentDir.AutoSize = true;
-            this.CurrentDir.Location = new System.Drawing.Point(130, 7);
+            this.CurrentDir.Location = new System.Drawing.Point(142, 35);
             this.CurrentDir.Name = "CurrentDir";
-            this.CurrentDir.Size = new System.Drawing.Size(98, 15);
+            this.CurrentDir.Size = new System.Drawing.Size(122, 20);
             this.CurrentDir.TabIndex = 4;
             this.CurrentDir.Text = "Current Directory";
             // 
             // PreviousDirBtn
             // 
-            this.PreviousDirBtn.Location = new System.Drawing.Point(10, 23);
-            this.PreviousDirBtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.PreviousDirBtn.Location = new System.Drawing.Point(13, 63);
             this.PreviousDirBtn.Name = "PreviousDirBtn";
-            this.PreviousDirBtn.Size = new System.Drawing.Size(108, 22);
+            this.PreviousDirBtn.Size = new System.Drawing.Size(123, 29);
             this.PreviousDirBtn.TabIndex = 7;
             this.PreviousDirBtn.Text = "Back";
             this.PreviousDirBtn.UseVisualStyleBackColor = true;
@@ -82,13 +85,14 @@
             this.FileSize,
             this.DateCreated});
             this.FilesTable.GridColor = System.Drawing.SystemColors.ButtonFace;
-            this.FilesTable.Location = new System.Drawing.Point(10, 50);
-            this.FilesTable.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.FilesTable.Location = new System.Drawing.Point(11, 98);
             this.FilesTable.Name = "FilesTable";
             this.FilesTable.RowHeadersWidth = 51;
             this.FilesTable.RowTemplate.Height = 29;
-            this.FilesTable.Size = new System.Drawing.Size(788, 306);
+            this.FilesTable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+            this.FilesTable.Size = new System.Drawing.Size(1142, 377);
             this.FilesTable.TabIndex = 2;
+            this.FilesTable.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.FilesTable_CellMouseClick);
             this.FilesTable.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.FilesTable_CellMouseDoubleClick);
             // 
             // DirName
@@ -97,7 +101,7 @@
             this.DirName.MinimumWidth = 6;
             this.DirName.Name = "DirName";
             this.DirName.ReadOnly = true;
-            this.DirName.Width = 256;
+            this.DirName.Width = 512;
             // 
             // DirType
             // 
@@ -125,27 +129,67 @@
             // 
             // NextDirBtn
             // 
-            this.NextDirBtn.Location = new System.Drawing.Point(130, 23);
-            this.NextDirBtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.NextDirBtn.Location = new System.Drawing.Point(142, 63);
             this.NextDirBtn.Name = "NextDirBtn";
-            this.NextDirBtn.Size = new System.Drawing.Size(82, 22);
+            this.NextDirBtn.Size = new System.Drawing.Size(94, 29);
             this.NextDirBtn.TabIndex = 8;
             this.NextDirBtn.Text = "Forward";
             this.NextDirBtn.UseVisualStyleBackColor = true;
             this.NextDirBtn.Click += new System.EventHandler(this.NextDirBtn_Click);
             // 
+            // CreateDirBtn
+            // 
+            this.CreateDirBtn.Location = new System.Drawing.Point(327, 481);
+            this.CreateDirBtn.Name = "CreateDirBtn";
+            this.CreateDirBtn.Size = new System.Drawing.Size(112, 29);
+            this.CreateDirBtn.TabIndex = 9;
+            this.CreateDirBtn.Text = "Create Folder";
+            this.CreateDirBtn.UseVisualStyleBackColor = true;
+            this.CreateDirBtn.Click += new System.EventHandler(this.CreateDirBtn_Click);
+            // 
+            // newDirBox
+            // 
+            this.newDirBox.Location = new System.Drawing.Point(12, 483);
+            this.newDirBox.Name = "newDirBox";
+            this.newDirBox.Size = new System.Drawing.Size(309, 27);
+            this.newDirBox.TabIndex = 11;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(13, 9);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(96, 20);
+            this.label3.TabIndex = 13;
+            this.label3.Text = "Selected File:";
+            // 
+            // SelectedFile
+            // 
+            this.SelectedFile.AutoSize = true;
+            this.SelectedFile.Location = new System.Drawing.Point(142, 9);
+            this.SelectedFile.Name = "SelectedFile";
+            this.SelectedFile.Size = new System.Drawing.Size(93, 20);
+            this.SelectedFile.TabIndex = 14;
+            this.SelectedFile.Text = "Selected File";
+            // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.BackColor = System.Drawing.SystemColors.Control;
+            this.ClientSize = new System.Drawing.Size(1165, 600);
+            this.Controls.Add(this.SelectedFile);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.newDirBox);
+            this.Controls.Add(this.CreateDirBtn);
             this.Controls.Add(this.NextDirBtn);
             this.Controls.Add(this.PreviousDirBtn);
             this.Controls.Add(this.CurrentDir);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.FilesTable);
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "My File Explorer";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.FilesTable)).EndInit();
             this.ResumeLayout(false);
@@ -158,10 +202,14 @@
         private Label CurrentDir;
         private Button PreviousDirBtn;
         private DataGridView FilesTable;
+        private Button NextDirBtn;
+        private Button CreateDirBtn;
+        private TextBox newDirBox;
         private DataGridViewTextBoxColumn DirName;
         private DataGridViewTextBoxColumn DirType;
         private DataGridViewTextBoxColumn FileSize;
         private DataGridViewTextBoxColumn DateCreated;
-        private Button NextDirBtn;
+        private Label label3;
+        private Label SelectedFile;
     }
 }

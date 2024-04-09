@@ -127,7 +127,11 @@ namespace MyFileExplorer
 
                 if (row.Cells[0].Value != null && row.Cells[1].Value != null)
                 {
-                    if (row.Cells[1].Value.ToString() == "Folder")
+                    /*
+                     * checks if the currently selected row is a folder and
+                     * if the column is the first one (when user clicks folder name)
+                     */
+                    if (row.Cells[1].Value.ToString() == "Folder" && e.ColumnIndex == 0)
                     {
                         //read next directory's name
                         directory = "\\"  + row.Cells[0].Value.ToString();
@@ -228,6 +232,68 @@ namespace MyFileExplorer
         private void NextDirBtn_Click(object sender, EventArgs e)
         {
             LoadPreviousDirectory(directory, "Up");
+        }
+
+        private void CreateDirBtn_Click(object sender, EventArgs e)
+        {
+            //read user input directory
+            string directory = newDirBox.Text;
+
+            //escape backslash
+            string quote = "\"";
+
+            if (directory != "")
+            {
+                //create process object
+                Process process = new Process();
+
+                
+                //use cmd to create a new directory without display it
+                process.StartInfo.FileName = "cmd.exe";
+                process.StartInfo.Arguments = "/K " + "mkdir " + quote + currentDir + "\\" + directory + quote;
+                process.StartInfo.UseShellExecute = true;
+                process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                process.Start();
+
+                //let user know the new directory was made
+                MessageBox.Show("Directory successfully made. Reopen this directory to see it.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show("Directory can't be empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void FilesTable_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            //variables to be used below
+            DataGridViewRow? row;
+
+            /*
+             * checks if the index of the selected row
+             * is within the range of 0 to the amount of processes
+             * because the user may click something in the table
+             * out of range such as when they want to order the table by
+             * process name
+             */
+            if (e.RowIndex > -1)
+            {
+                //get the currently selected row
+                row = FilesTable.Rows[e.RowIndex];
+                /*
+                 * check if the currently selected row's folder/file name isn't null
+                 * so then the program can read the contents of that row
+                 */
+
+                if (row.Cells[0].Value != null)
+                {
+                    /*
+                     * checks if the currently selected row is a folder and
+                     * if the column is the first one (when user clicks folder name)
+                     */
+                    SelectedFile.Text = row.Cells[0].Value.ToString();
+                }
+            }
         }
     }
 }
