@@ -4,7 +4,6 @@ using System.Collections;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
-using static System.Net.WebRequestMethods;
 
 namespace MyFileExplorer
 {
@@ -234,33 +233,38 @@ namespace MyFileExplorer
             LoadPreviousDirectory(directory, "Up");
         }
 
+        //runs a command with cmd
+        private void RunCommand(string command)
+        {
+            //create process object
+            Process process = new Process();
+
+            //use cmd commands without display it
+            process.StartInfo.FileName = "cmd.exe";
+            process.StartInfo.Arguments = "/K " + command;
+            process.StartInfo.UseShellExecute = true;
+            process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            process.Start();
+        }
+
         private void CreateDirBtn_Click(object sender, EventArgs e)
         {
             //read user input directory
-            string directory = newDirBox.Text;
+            string newDirectory = NewDirBox.Text;
 
-            //escape backslash
-            string quote = "\"";
-
-            if (directory != "")
+            if (newDirectory != "")
             {
-                //create process object
-                Process process = new Process();
+                try
+                {
+                    //create directory with cmd
+                    RunCommand("mkdir " + "\"" + currentDir + "\\" + newDirectory + "\"");
 
-                
-                //use cmd to create a new directory without display it
-                process.StartInfo.FileName = "cmd.exe";
-                process.StartInfo.Arguments = "/K " + "mkdir " + quote + currentDir + "\\" + directory + quote;
-                process.StartInfo.UseShellExecute = true;
-                process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-                process.Start();
-
-                //let user know the new directory was made
-                MessageBox.Show("Directory successfully made. Reopen this directory to see changes.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else
-            {
-                MessageBox.Show("Directory can't be empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    //let user know the new directory was made
+                    MessageBox.Show("Directory successfully made. Reopen this directory to see changes.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                } catch
+                {
+                    MessageBox.Show("Directory can't be empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
@@ -294,7 +298,10 @@ namespace MyFileExplorer
                     SelectedFile.Text = row.Cells[0].Value.ToString();
                 }
                 
-                //if the currently selected row is not a folder, disable delete directory button
+                /*
+                 * if the currently selected row is a file, 
+                 * disable delete directory button
+                 */
                 if (row.Cells[1].Value.ToString() == "File")
                 {
                     DeleteDirBtn.Enabled = false;
@@ -310,28 +317,44 @@ namespace MyFileExplorer
             //read seleted directory
             string selectedDirectory = SelectedFile.Text;
 
-            //escape backslash
-            string quote = "\"";
+            if (selectedDirectory != "C:\\" || directory != "C:\\Windows\\System32")
+            {
+                try
+                {
+                    //remove selected directory with cmd
+                    RunCommand("rmdir " + "\"" + currentDir + "\\" + selectedDirectory + "\"");
+
+                    //let user know the directory was deleted
+                    MessageBox.Show("Successfully deleted directory. Reopen this directory to see changes", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                } catch
+                {
+                    MessageBox.Show("This directory can't be deleted", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void RenameDirBtn_Click(object sender, EventArgs e)
+        {
+            //read seleted directory
+            string selectedDirectory = SelectedFile.Text;
+
+            //read what the renamed file/directory name will be
+            string newFileName = RenameDirBox.Text;
 
             if (selectedDirectory != "C:\\" || directory != "C:\\Windows\\System32")
             {
-                //create process object
-                Process process = new Process();
+                try
+                {
+                    //rename selected directory with cmd
+                    RunCommand("ren " + "\"" + currentDir + "\\" + selectedDirectory + "\"" + " " + newFileName);
 
-
-                //use cmd to create a new directory without display it
-                process.StartInfo.FileName = "cmd.exe";
-                process.StartInfo.Arguments = "/K " + "rmdir " + quote + currentDir + "\\" + selectedDirectory + quote;
-                process.StartInfo.UseShellExecute = true;
-                process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-                process.Start();
-                
-                //let user know the directory was deleted
-                MessageBox.Show("Successfully deleted directory. Reopen this directory to see changes", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else
-            {
-                MessageBox.Show("This directory can't be deleted", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    //let user know the file/directory was renamed
+                    MessageBox.Show("Successfully renamed file/directory. Reopen this directory to see changes", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    SelectedFile.Text = newFileName;
+                } catch
+                {
+                    MessageBox.Show("This directory can't be deleted", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
     }

@@ -38,10 +38,12 @@
             this.DateCreated = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.NextDirBtn = new System.Windows.Forms.Button();
             this.CreateDirBtn = new System.Windows.Forms.Button();
-            this.newDirBox = new System.Windows.Forms.TextBox();
+            this.NewDirBox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.SelectedFile = new System.Windows.Forms.Label();
             this.DeleteDirBtn = new System.Windows.Forms.Button();
+            this.RenameDirBox = new System.Windows.Forms.TextBox();
+            this.RenameDirBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.FilesTable)).BeginInit();
             this.SuspendLayout();
             // 
@@ -57,7 +59,7 @@
             // CurrentDir
             // 
             this.CurrentDir.AutoSize = true;
-            this.CurrentDir.Location = new System.Drawing.Point(142, 35);
+            this.CurrentDir.Location = new System.Drawing.Point(171, 35);
             this.CurrentDir.Name = "CurrentDir";
             this.CurrentDir.Size = new System.Drawing.Size(122, 20);
             this.CurrentDir.TabIndex = 4;
@@ -91,7 +93,7 @@
             this.FilesTable.RowHeadersWidth = 51;
             this.FilesTable.RowTemplate.Height = 29;
             this.FilesTable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.FilesTable.Size = new System.Drawing.Size(1142, 377);
+            this.FilesTable.Size = new System.Drawing.Size(1142, 363);
             this.FilesTable.TabIndex = 2;
             this.FilesTable.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.FilesTable_CellMouseClick);
             this.FilesTable.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.FilesTable_CellMouseDoubleClick);
@@ -140,34 +142,34 @@
             // 
             // CreateDirBtn
             // 
-            this.CreateDirBtn.Location = new System.Drawing.Point(327, 525);
+            this.CreateDirBtn.Location = new System.Drawing.Point(941, 514);
             this.CreateDirBtn.Name = "CreateDirBtn";
-            this.CreateDirBtn.Size = new System.Drawing.Size(112, 29);
+            this.CreateDirBtn.Size = new System.Drawing.Size(214, 29);
             this.CreateDirBtn.TabIndex = 9;
-            this.CreateDirBtn.Text = "Create Folder";
+            this.CreateDirBtn.Text = "Create New Folder";
             this.CreateDirBtn.UseVisualStyleBackColor = true;
             this.CreateDirBtn.Click += new System.EventHandler(this.CreateDirBtn_Click);
             // 
-            // newDirBox
+            // NewDirBox
             // 
-            this.newDirBox.Location = new System.Drawing.Point(12, 527);
-            this.newDirBox.Name = "newDirBox";
-            this.newDirBox.Size = new System.Drawing.Size(309, 27);
-            this.newDirBox.TabIndex = 11;
+            this.NewDirBox.Location = new System.Drawing.Point(626, 515);
+            this.NewDirBox.Name = "NewDirBox";
+            this.NewDirBox.Size = new System.Drawing.Size(309, 27);
+            this.NewDirBox.TabIndex = 11;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(13, 9);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(96, 20);
+            this.label3.Size = new System.Drawing.Size(144, 20);
             this.label3.TabIndex = 13;
-            this.label3.Text = "Selected File:";
+            this.label3.Text = "Selected File/Folder:";
             // 
             // SelectedFile
             // 
             this.SelectedFile.AutoSize = true;
-            this.SelectedFile.Location = new System.Drawing.Point(142, 9);
+            this.SelectedFile.Location = new System.Drawing.Point(171, 9);
             this.SelectedFile.Name = "SelectedFile";
             this.SelectedFile.Size = new System.Drawing.Size(93, 20);
             this.SelectedFile.TabIndex = 14;
@@ -175,24 +177,43 @@
             // 
             // DeleteDirBtn
             // 
-            this.DeleteDirBtn.Location = new System.Drawing.Point(13, 491);
+            this.DeleteDirBtn.Location = new System.Drawing.Point(11, 479);
             this.DeleteDirBtn.Name = "DeleteDirBtn";
-            this.DeleteDirBtn.Size = new System.Drawing.Size(130, 29);
+            this.DeleteDirBtn.Size = new System.Drawing.Size(170, 29);
             this.DeleteDirBtn.TabIndex = 15;
-            this.DeleteDirBtn.Text = "Delete Folder";
+            this.DeleteDirBtn.Text = "Delete Selected Folder";
             this.DeleteDirBtn.UseVisualStyleBackColor = true;
             this.DeleteDirBtn.Click += new System.EventHandler(this.DeleteDirBtn_Click);
+            // 
+            // RenameDirBox
+            // 
+            this.RenameDirBox.Location = new System.Drawing.Point(626, 549);
+            this.RenameDirBox.Name = "RenameDirBox";
+            this.RenameDirBox.Size = new System.Drawing.Size(309, 27);
+            this.RenameDirBox.TabIndex = 17;
+            // 
+            // RenameDirBtn
+            // 
+            this.RenameDirBtn.Location = new System.Drawing.Point(942, 547);
+            this.RenameDirBtn.Name = "RenameDirBtn";
+            this.RenameDirBtn.Size = new System.Drawing.Size(213, 29);
+            this.RenameDirBtn.TabIndex = 16;
+            this.RenameDirBtn.Text = "Rename Selected File/Folder";
+            this.RenameDirBtn.UseVisualStyleBackColor = true;
+            this.RenameDirBtn.Click += new System.EventHandler(this.RenameDirBtn_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(1165, 600);
+            this.ClientSize = new System.Drawing.Size(1165, 586);
+            this.Controls.Add(this.RenameDirBox);
+            this.Controls.Add(this.RenameDirBtn);
             this.Controls.Add(this.DeleteDirBtn);
             this.Controls.Add(this.SelectedFile);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.newDirBox);
+            this.Controls.Add(this.NewDirBox);
             this.Controls.Add(this.CreateDirBtn);
             this.Controls.Add(this.NextDirBtn);
             this.Controls.Add(this.PreviousDirBtn);
@@ -216,7 +237,7 @@
         private DataGridView FilesTable;
         private Button NextDirBtn;
         private Button CreateDirBtn;
-        private TextBox newDirBox;
+        private TextBox NewDirBox;
         private DataGridViewTextBoxColumn DirName;
         private DataGridViewTextBoxColumn DirType;
         private DataGridViewTextBoxColumn FileSize;
@@ -224,5 +245,7 @@
         private Label label3;
         private Label SelectedFile;
         private Button DeleteDirBtn;
+        private TextBox RenameDirBox;
+        private Button RenameDirBtn;
     }
 }
