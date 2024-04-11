@@ -44,6 +44,7 @@
             this.DeleteDirBtn = new System.Windows.Forms.Button();
             this.RenameDirBox = new System.Windows.Forms.TextBox();
             this.RenameDirBtn = new System.Windows.Forms.Button();
+            this.OpenFileBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.FilesTable)).BeginInit();
             this.SuspendLayout();
             // 
@@ -202,12 +203,23 @@
             this.RenameDirBtn.UseVisualStyleBackColor = true;
             this.RenameDirBtn.Click += new System.EventHandler(this.RenameDirBtn_Click);
             // 
+            // OpenFileBtn
+            // 
+            this.OpenFileBtn.Location = new System.Drawing.Point(13, 513);
+            this.OpenFileBtn.Name = "OpenFileBtn";
+            this.OpenFileBtn.Size = new System.Drawing.Size(165, 29);
+            this.OpenFileBtn.TabIndex = 18;
+            this.OpenFileBtn.Text = "Open Selected File";
+            this.OpenFileBtn.UseVisualStyleBackColor = true;
+            this.OpenFileBtn.Click += new System.EventHandler(this.OpenFileBtn_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(1165, 586);
+            this.Controls.Add(this.OpenFileBtn);
             this.Controls.Add(this.RenameDirBox);
             this.Controls.Add(this.RenameDirBtn);
             this.Controls.Add(this.DeleteDirBtn);
@@ -247,5 +259,6 @@
         private Button DeleteDirBtn;
         private TextBox RenameDirBox;
         private Button RenameDirBtn;
+        private Button OpenFileBtn;
     }
 }

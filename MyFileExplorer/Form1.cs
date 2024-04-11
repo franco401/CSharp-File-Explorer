@@ -256,8 +256,11 @@ namespace MyFileExplorer
             {
                 try
                 {
+                    //command to run
+                    string command = "mkdir " + "\"" + currentDir + "\\" + newDirectory + "\"";
+
                     //create directory with cmd
-                    RunCommand("mkdir " + "\"" + currentDir + "\\" + newDirectory + "\"");
+                    RunCommand(command);
 
                     //let user know the new directory was made
                     MessageBox.Show("Directory successfully made. Reopen this directory to see changes.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -300,14 +303,17 @@ namespace MyFileExplorer
                 
                 /*
                  * if the currently selected row is a file, 
-                 * disable delete directory button
+                 * disable delete directory button and enable open file button
+                 * otherwise, enable delete directory button and disable open file button
                  */
                 if (row.Cells[1].Value.ToString() == "File")
                 {
                     DeleteDirBtn.Enabled = false;
+                    OpenFileBtn.Enabled = true;
                 } else
                 {
                     DeleteDirBtn.Enabled = true;
+                    OpenFileBtn.Enabled = false;
                 }
             }
         }
@@ -321,8 +327,11 @@ namespace MyFileExplorer
             {
                 try
                 {
+                    //command to run
+                    string command = "rmdir " + "\"" + currentDir + "\\" + selectedDirectory + "\"";
+
                     //remove selected directory with cmd
-                    RunCommand("rmdir " + "\"" + currentDir + "\\" + selectedDirectory + "\"");
+                    RunCommand(command);
 
                     //let user know the directory was deleted
                     MessageBox.Show("Successfully deleted directory. Reopen this directory to see changes", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -345,8 +354,11 @@ namespace MyFileExplorer
             {
                 try
                 {
+                    //command to run
+                    string command = "ren " + "\"" + currentDir + "\\" + selectedDirectory + "\"" + " " + newFileName;
+
                     //rename selected directory with cmd
-                    RunCommand("ren " + "\"" + currentDir + "\\" + selectedDirectory + "\"" + " " + newFileName);
+                    RunCommand(command);
 
                     //let user know the file/directory was renamed
                     MessageBox.Show("Successfully renamed file/directory. Reopen this directory to see changes", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -355,6 +367,24 @@ namespace MyFileExplorer
                 {
                     MessageBox.Show("This directory can't be deleted", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+            }
+        }
+
+        private void OpenFileBtn_Click(object sender, EventArgs e)
+        {
+            //read seleted file
+            string selectedFile = SelectedFile.Text;
+            try
+            {
+                //command to run
+                string command = "start " + "\"" + "\"" + " " + "\"" + currentDir + "\\" + selectedFile + "\"" + "\"";
+
+                //open selected file with cmd
+                RunCommand(command);
+            }
+            catch
+            {
+                MessageBox.Show("This file couldn't be opened", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
