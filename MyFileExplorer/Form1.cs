@@ -15,6 +15,23 @@ namespace MyFileExplorer
             InitializeComponent();
         }
 
+        /*
+        * initial directory to load
+        * it's placed here so it's accessible across all functions
+        * and it's loaded once so the it's value can be changed later
+        */
+        string currentDir = "C:\\Users\\";
+
+        //used for loading the previous directory
+        string? directory = "";
+
+
+        //directory stack to keep track of visted directories
+        string[] dirStack = new string[1024];
+        int top = 0;
+
+
+        //displays file size (such as KB, MB, GB, etc.)
         string GetFileSize(double fileSize)
         {
             string[] fileSizes = { "B", "KB", "MB", "GB, TB" };
@@ -34,22 +51,6 @@ namespace MyFileExplorer
             fileSize = Math.Round(fileSize, 2);
             return fileSize + " " + fileSizes[fileSizeIndex];
         }
-
-
-        /*
-         * initial directory to load
-         * it's placed here so it's accessible across all functions
-         * and it's loaded once so the it's value can be changed later
-         */
-        string currentDir = "C:\\";
-
-        //used for loading the previous directory
-        string? directory = "";
-
-
-        //directory stack to keep track of visted directories
-        string[] dirStack = new string[65536];
-        int top = 0;
 
         //loads the files and folders in a given directory into the files table
         private void LoadDirectory(string path)
@@ -94,10 +95,13 @@ namespace MyFileExplorer
             }
         }
 
+        //load the Users directory when loading this program (first time)
         private void Form1_Load(object sender, EventArgs e)
         {
             dirStack[top] = currentDir;
             NextDirBtn.Enabled = false;
+
+            //empty string is used to stay on Users directory first time
             LoadDirectory("");
         }
 
@@ -223,17 +227,29 @@ namespace MyFileExplorer
             }
         }
 
+        /*
+         * button click to go back to previously viewed directory
+         * goes down the dirStack
+         */
         private void PreviousDirBtn_Click(object sender, EventArgs e)
         {
             LoadPreviousDirectory(directory, "Down");
         }
 
+        /*
+         * button click to go back to previously viewed directory
+         * goes up the dirStack
+         */
         private void NextDirBtn_Click(object sender, EventArgs e)
         {
             LoadPreviousDirectory(directory, "Up");
         }
 
-        //runs a command with cmd
+        /*
+         * runs a command with cmd
+         * this is used for creating and deleting a file/folder,
+         * renaming a file/folder and to open a file (if possible) as a process
+         */
         private void RunCommand(string command)
         {
             //create process object
@@ -245,8 +261,15 @@ namespace MyFileExplorer
             process.StartInfo.UseShellExecute = true;
             process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             process.Start();
+            
+            //set Process object to null so GC can collect it sooner to save heap memory (hopefully)
+            process = null!;
         }
 
+        /*
+         * button click to create a new folder (in currently viewing directory)
+         * based on name entered in textbox
+         */
         private void CreateDirBtn_Click(object sender, EventArgs e)
         {
             //read user input directory
@@ -308,36 +331,12 @@ namespace MyFileExplorer
                  */
                 if (row.Cells[1].Value.ToString() == "File")
                 {
-                    DeleteDirBtn.Enabled = false;
+                    //DeleteDirBtn.Enabled = false;
                     OpenFileBtn.Enabled = true;
                 } else
                 {
-                    DeleteDirBtn.Enabled = true;
+                    //DeleteDirBtn.Enabled = true;
                     OpenFileBtn.Enabled = false;
-                }
-            }
-        }
-
-        private void DeleteDirBtn_Click(object sender, EventArgs e)
-        {
-            //read seleted directory
-            string selectedDirectory = SelectedFile.Text;
-
-            if (selectedDirectory != "C:\\" || directory != "C:\\Windows\\System32")
-            {
-                try
-                {
-                    //command to run
-                    string command = "rmdir " + "\"" + currentDir + "\\" + selectedDirectory + "\"";
-
-                    //remove selected directory with cmd
-                    RunCommand(command);
-
-                    //let user know the directory was deleted
-                    MessageBox.Show("Successfully deleted directory. Reopen this directory to see changes", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                } catch
-                {
-                    MessageBox.Show("This directory can't be deleted", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -356,6 +355,8 @@ namespace MyFileExplorer
                 {
                     //command to run
                     string command = "ren " + "\"" + currentDir + "\\" + selectedDirectory + "\"" + " " + newFileName;
+
+                    MessageBox.Show(command);
 
                     //rename selected directory with cmd
                     RunCommand(command);
