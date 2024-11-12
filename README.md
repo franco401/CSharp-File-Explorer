@@ -8,7 +8,6 @@ This is a desktop application written in C# that can let users browser the files
 * Displays the date and time of when the file or folder was created
 * Users can traverse back and forth between their folders
 * Users can create new directories by typing it in a textbox and clicking a button
-* Users can delete a currently selected folder with a button
 
 ## Installation Guide for Windows
 
